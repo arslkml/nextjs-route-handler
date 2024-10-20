@@ -1,9 +1,14 @@
+import { NextRequest } from "next/server"
 import { comments } from "./data"
 
 // Route Handler
-// GET Request
-export async function GET() {
-    return Response.json(comments)
+// GET Request, Query Parameter
+export async function GET(request: NextRequest) {
+    const searchParams = request.nextUrl.searchParams
+    const query = searchParams.get('query')
+    const filtered = query 
+    ? comments.filter(comment => comment.text.includes(query)) : comments
+    return Response.json(filtered)
 }
 // POST Request
 export async function POST(request: Request) {

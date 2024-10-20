@@ -1,7 +1,12 @@
+import { redirect } from "next/navigation"
 import { comments } from "../data"
 
 // Dynamic Route Handler
 export async function GET( _req: Request, { params }: { params: { id: string } } ) {
+    // Redirect 
+    if (parseInt(params.id) > comments.length) {
+        redirect("/comments")
+    }
     const comment = comments.find( comment => comment.id === parseInt(params.id))
     return Response.json(comment)
 }
